@@ -11,7 +11,7 @@ const QuestionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    explation: {
+    explanation: {
       type: String,
     },
     exam: {
