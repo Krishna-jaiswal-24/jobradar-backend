@@ -4,12 +4,12 @@ const QuestionSchema = new mongoose.Schema(
   {
     question: {
       type: String,
-      required: true,
+
     },
     options: [{ type: String }],
     correctAnswer: {
       type: String,
-      required: true,
+
     },
     explanation: {
       type: String,
