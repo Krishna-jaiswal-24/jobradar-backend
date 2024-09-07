@@ -1,5 +1,6 @@
 import Exam from "../models/Exams.js";
 import Questions from "../models/Questions.js";
+import mongoose from "mongoose";
 
 const createExam = async (req, res) => {
   try {
@@ -110,6 +111,51 @@ const getExamById = async (req, res) => {
       .json({ message: "An error occurred while fetching exam", error });
   }
 };
+const deleteExam = async (req, res) => {
+  try {
+    const { examId } = req.params;
+
+    // Check if examId is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(examId)) {
+      return res.status(400).json({ message: "Invalid exam ID format" });
+    }
+
+    const exam = await Exam.findByIdAndDelete(examId).then((exam) => {
+      if (!exam) {
+        return res.status(404).json({ message: "Exam not found" });
+      }
+    });
+
+    return res.status(200).json({ message: "Exam deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting exam:", error); // Log the error
+    return res
+      .status(500)
+      .json({ message: "An error occurred while deleting the exam", error });
+  }
+};
+const updateExam = async (req, res) => {
+  try {
+    const { examId } = req.params;
+    const exam = req.body;
+
+    if (!exam) {
+      return res.status(400).json({ message: "Exam details are required" });
+    }
+
+    const updatedExam = await Exam.findByIdAndUpdate(examId, exam, {
+      new: true,
+    });
+
+    return res
+      .status(200)
+      .json({ updatedExam, message: "Exam updated successfully" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "An error occurred while updating exam", error });
+  }
+};
 
 export {
   createExam,
@@ -117,4 +163,6 @@ export {
   addQuestionToExam,
   getAllQuestionsForExam,
   getExamById,
+  deleteExam,
+  updateExam,
 };
