@@ -4,19 +4,18 @@ const ExamSchema = new mongoose.Schema(
   {
     examName: {
       type: String,
-
     },
     examDescription: {
       type: String,
-
     },
     examDate: {
       type: Date,
-
+    },
+    category: {
+      type: String,
     },
     examDuration: {
       type: Number,
-
     },
     examQuestions: [
       {

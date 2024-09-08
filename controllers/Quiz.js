@@ -15,6 +15,7 @@ const createExam = async (req, res) => {
       examDescription: exam.examDescription,
       examDate: exam.examDate,
       examDuration: exam.examDuration,
+      category: exam.category,
     });
     await newExam.save();
 
